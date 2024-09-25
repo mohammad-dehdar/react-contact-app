@@ -54,7 +54,7 @@ function ContactForm({ editingContact, onClose }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit} className="transition-all mb-4 bg-white shadow-md border border-slate-200 rounded-3xl p-4">
       <div className="mb-2">
         <input
           type="text"
@@ -62,9 +62,9 @@ function ContactForm({ editingContact, onClose }) {
           value={formData.firstName}
           onChange={handleChange}
           placeholder="name"
-          className="w-full p-2 border rounded"
+          className="w-full shadow-md p-2 border border-slate-200 bg-transparent  focus:outline-none focus:border-slate-400 rounded-3xl"
         />
-        {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
+        {errors.firstName && <p className="bg-red-500 w-fit px-2 rounded-lg shadow-md text-white mx-2 mt-[3px]">{errors.firstName}</p>}
       </div>
       <div className="mb-2">
         <input
@@ -73,9 +73,9 @@ function ContactForm({ editingContact, onClose }) {
           value={formData.lastName}
           onChange={handleChange}
           placeholder="last Name"
-          className="w-full p-2 border rounded"
+          className="w-full shadow-md p-2 border border-slate-200 bg-transparent  focus:outline-none focus:border-slate-400 rounded-3xl"
         />
-        {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
+        {errors.lastName && <p className="bg-red-500 w-fit px-2 rounded-lg shadow-md text-white mx-2 mt-[3px]">{errors.lastName}</p>}
       </div>
       <div className="mb-2">
         <input
@@ -84,9 +84,9 @@ function ContactForm({ editingContact, onClose }) {
           value={formData.email}
           onChange={handleChange}
           placeholder="email"
-          className="w-full p-2 border rounded"
+          className="w-full shadow-md p-2 border border-slate-200 bg-transparent  focus:outline-none focus:border-slate-400 rounded-3xl"
         />
-        {errors.email && <p className="text-red-500">{errors.email}</p>}
+        {errors.email && <p className="bg-red-500 w-fit px-2 rounded-lg shadow-md text-white mx-2 mt-[3px]">{errors.email}</p>}
       </div>
       <div className="mb-2">
         <input
@@ -95,16 +95,18 @@ function ContactForm({ editingContact, onClose }) {
           value={formData.phone}
           onChange={handleChange}
           placeholder="phone number "
-          className="w-full p-2 border rounded"
+          className="w-full shadow-md p-2 border border-slate-200 bg-transparent  focus:outline-none focus:border-slate-400 rounded-3xl"
         />
-        {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+        {errors.phone && <p className="bg-red-500 w-fit px-2 rounded-lg shadow-md text-white mx-2 mt-[3px]">{errors.phone}</p>}
       </div>
-      <button type="submit" className="bg-green-500 text-white p-2 rounded mr-2">
-        {editingContact ? 'Edit Contact' : ' Add Contact'}
-      </button>
-      <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded">
-        لغو
-      </button>
+      <div className='flex mt-4 space-x-2'>
+        <button type="submit" className="bg-green-400 shadow-md w-44 py-2 rounded-xl hover:bg-green-500">
+          {editingContact ? 'Edit Contact' : ' Add Contact'}
+        </button>
+        <button type="button" onClick={onClose} className="bg-red-400 w-44 py-2 rounded-xl hover:bg-red-500">
+          cancel
+        </button>
+      </div>
     </form>
   );
 }

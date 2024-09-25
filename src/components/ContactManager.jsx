@@ -4,6 +4,9 @@ import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import { useContact } from '../context/ContactContext';
 import axios from 'axios';
+import Header from './Header';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ContactManager() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -44,13 +47,16 @@ function ContactManager() {
 
   return (
     <div>
-      <button
-        onClick={handleAddContact}
-        className="bg-sky-500 text-white p-2 rounded mb-4"
-      >
-        Add New Contact
-      </button>
-      <SearchBar />
+      <Header/>
+      <div className='flex justify-between mt-20'>
+        <SearchBar />
+        <button
+          onClick={handleAddContact}
+          className="bg-sky-500 text-white p-2 mb-4 rounded-2xl shadow-md transition-all hover:bg-sky-600 hover:shadow-none"
+        >
+          Add New Contact  <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </div>
       {isFormVisible && (
         <ContactForm
           editingContact={editingContact}
@@ -69,8 +75,9 @@ function ContactManager() {
       {state.selectedContacts.length > 0 && (
         <button
           onClick={handleDeleteSelectedContacts}
-          className="bg-red-500 text-white p-2 rounded mt-4"
+          className="transition-all bg-red-400 p-2 rounded-2xl shadow-md mt-4 hover:bg-red-500"
         >
+          <FontAwesomeIcon icon={faTrash} className='mr-2'/>
           Delete Slected Contacts
         </button>
       )}

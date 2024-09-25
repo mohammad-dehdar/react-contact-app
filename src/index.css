@@ -4,6 +4,19 @@
 
 body {
     font-family: sans-serif;
+    max-width: 1000px;
+    margin: auto;
+    background-color: aliceblue;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* برای Internet Explorer و Edge */
+    scrollbar-width: none;  /* برای Firefox */
 }
 
 
