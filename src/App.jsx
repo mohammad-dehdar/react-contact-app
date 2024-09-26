@@ -1,3 +1,4 @@
+// app component
 import React from 'react';
 import { ContactProvider } from './context/ContactContext';
 import ContactManager from './components/ContactManager';

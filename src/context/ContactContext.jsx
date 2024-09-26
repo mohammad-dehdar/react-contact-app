@@ -1,3 +1,4 @@
+//contactContext.jsx component
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import axios from 'axios';
 
@@ -59,6 +60,7 @@ export function ContactProvider({ children }) {
       const response = await axios.get('http://localhost:3000/contacts');
       dispatch({ type: 'SET_CONTACTS', payload: response.data });
     } catch (error) {
+      alert('Failed to fetch contacts. Please try again later.');
       console.error('Error fetching contacts:', error);
     }
   };

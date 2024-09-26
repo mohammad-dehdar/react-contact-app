@@ -1,39 +1,18 @@
 {
   "contacts": [
     {
-      "id": "14b1",
+      "id": "2fd7",
       "firstName": "mohammad",
       "lastName": "Dehdar",
       "email": "mdehdar7878@gmail.com",
       "phone": "09373978304"
     },
     {
-      "id": "f875",
+      "id": "6496",
       "firstName": "alireza",
-      "lastName": "kamrani",
-      "email": "kamraniali@gmail.com",
-      "phone": "09165464563"
-    },
-    {
-      "id": "7460",
-      "firstName": "saman",
-      "lastName": "jalali",
-      "email": "jalalisaman@gmail.com",
-      "phone": "09123267893"
-    },
-    {
-      "id": "3d14",
-      "firstName": "havash",
-      "lastName": "farahani",
-      "email": "farahaniH@gmail.com",
-      "phone": "09149002312"
-    },
-    {
-      "id": "ef7e",
-      "firstName": "elnaz",
-      "lastName": "saffari",
-      "email": "elnaz@gmail.com",
-      "phone": "09124539009"
+      "lastName": "hoseini",
+      "email": "mdehdar7878@gmail.com",
+      "phone": "09373978304"
     }
   ]
 }

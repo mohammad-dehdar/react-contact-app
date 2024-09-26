@@ -1,7 +1,6 @@
-import React from 'react';
 import { useContact } from '../context/ContactContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEnvelope, faPhone, faUser} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEnvelope, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
 function ContactList({ contacts, onEdit, onDelete }) {
@@ -13,7 +12,9 @@ function ContactList({ contacts, onEdit, onDelete }) {
 
   return (
     <div>
-      <h2 className="text-xl bg-white p-2 rounded-lg shadow-xl font-semibold mb-2 flex items-baseline">Contact List <FontAwesomeIcon icon={faUser} className='ml-2' /></h2>
+      <h2 className="text-xl bg-white p-2 rounded-lg shadow-xl font-semibold mb-2 flex items-baseline">
+        Contact List <FontAwesomeIcon icon={faUser} className='ml-2' />
+      </h2>
       <ul className='mt-4 border bg-white/10 border-slate-300 p-4 rounded-xl shadow-lg h-[600px] overflow-y-scroll no-scrollbar'>
         {contacts.map((contact) => (
           <li key={contact.id} className="bg-white mb-2 p-2 shadow-md rounded-3xl flex items-center transition-all hover:bg-slate-400">
@@ -22,10 +23,10 @@ function ContactList({ contacts, onEdit, onDelete }) {
               onChange={() => handleToggleSelect(contact.id)}
               className="mr-2"
             />
-            <div className="flex-grow space-y-1 *:border *:border-slate-300 *:w-fit *:rounded-lg *:px-2 *:bg-white">
-              <p className='capitalize'><FontAwesomeIcon icon={faUser}/> {`${contact.firstName} ${contact.lastName}`}</p>
-              <p><FontAwesomeIcon icon={faEnvelope}/> {contact.email}</p>
-              <p><FontAwesomeIcon icon={faPhone}/> {contact.phone}</p>
+            <div className="flex-grow space-y-1">
+              <p className='capitalize'><FontAwesomeIcon icon={faUser} /> {`${contact.firstName} ${contact.lastName}`}</p>
+              <p><FontAwesomeIcon icon={faEnvelope} /> {contact.email}</p>
+              <p><FontAwesomeIcon icon={faPhone} /> {contact.phone}</p>
             </div>
             <button
               onClick={() => onEdit(contact)}
@@ -34,7 +35,7 @@ function ContactList({ contacts, onEdit, onDelete }) {
               <FontAwesomeIcon icon={faEdit} />
             </button>
             <button
-              onClick={() => onDelete(contact.id)}
+              onClick={() => onDelete(contact)} 
               className="transition-all bg-red-500 text-white p-1 rounded hover:text-red-500 hover:bg-transparent"
             >
               <FontAwesomeIcon icon={faTrash} />

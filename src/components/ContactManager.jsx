@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useContact } from '../context/ContactContext';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
-import { useContact } from '../context/ContactContext';
-import axios from 'axios';
 import Header from './Header';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ConfirmationDialog from './ConfirmationDialog';
+import AddContactButton from './AddContactButton';
+import DeleteSelectedButton from './DeleteSelectedButton';
+import { deleteContact, deleteContacts } from '../services/contactService';
 
 function ContactManager() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [editingContact, setEditingContact] = useState(null);
   const { state, dispatch } = useContact();
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [contactToDelete, setContactToDelete] = useState(null);
+  const [isConfirmMultipleDeleteDialogOpen, setIsConfirmMultipleDeleteDialogOpen] = useState(false);
 
   const handleAddContact = () => {
     setIsFormVisible(true);
@@ -23,39 +27,52 @@ function ContactManager() {
     setEditingContact(contact);
   };
 
-  const handleDeleteContact = async (id) => {
+  const handleDeleteContact = (contact) => {
+    setContactToDelete(contact);
+    setIsConfirmDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (contactToDelete) {
+      try {
+        await deleteContact(contactToDelete.id);
+        dispatch({ type: 'DELETE_CONTACT', payload: contactToDelete.id });
+        setIsConfirmDialogOpen(false);
+        setContactToDelete(null);
+      } catch (error) {
+        console.error('error in deleting contact', error);
+        alert('deleting contact failed');
+      }
+    }
+  };
+  
+  const handleDeleteSelectedContacts = () => {
+    setIsConfirmMultipleDeleteDialogOpen(true);
+  };
+
+  const confirmDeleteSelectedContacts = async () => {
     try {
-      await axios.delete(`http://localhost:3000/contacts/${id}`);
-      dispatch({ type: 'DELETE_CONTACT', payload: id });
+      await deleteContacts(state.selectedContacts);
+      dispatch({ type: 'DELETE_SELECTED_CONTACTS' });
+      setIsConfirmMultipleDeleteDialogOpen(false);
     } catch (error) {
-      console.error('Error deleting contact:', error);
+      console.error('error in deleting selected contacts', error);
+      alert('deleting selected contacts failed');
     }
   };
 
-  const handleDeleteSelectedContacts = async () => {
-    try {
-      await Promise.all(
-        state.selectedContacts.map((id) =>
-          axios.delete(`http://localhost:3000/contacts/${id}`)
-        )
-      );
-      dispatch({ type: 'DELETE_SELECTED_CONTACTS' });
-    } catch (error) {
-      console.error('Error deleting selected contacts:', error);
-    }
-  };
+  const filteredContacts = state.contacts.filter((contact) =>
+    Object.values(contact).some((value) =>
+      value.toLowerCase().includes(state.searchTerm.toLowerCase())
+    )
+  );
 
   return (
     <div>
-      <Header/>
-      <div className='flex justify-between mt-20'>
+      <Header />
+      <div className='flex justify-between mt-20 max-sm:flex-col-reverse'>
         <SearchBar />
-        <button
-          onClick={handleAddContact}
-          className="bg-sky-500 text-white p-2 mb-4 rounded-2xl shadow-md transition-all hover:bg-sky-600 hover:shadow-none"
-        >
-          Add New Contact  <FontAwesomeIcon icon={faPlus} />
-        </button>
+        <AddContactButton onClick={handleAddContact} />
       </div>
       {isFormVisible && (
         <ContactForm
@@ -64,23 +81,28 @@ function ContactManager() {
         />
       )}
       <ContactList
-        contacts={state.contacts.filter((contact) =>
-          Object.values(contact).some((value) =>
-            value.toLowerCase().includes(state.searchTerm.toLowerCase())
-          )
-        )}
+        contacts={filteredContacts}
         onEdit={handleEditContact}
         onDelete={handleDeleteContact}
       />
       {state.selectedContacts.length > 0 && (
-        <button
-          onClick={handleDeleteSelectedContacts}
-          className="transition-all bg-red-400 p-2 rounded-2xl shadow-md mt-4 hover:bg-red-500"
-        >
-          <FontAwesomeIcon icon={faTrash} className='mr-2'/>
-          Delete Slected Contacts
-        </button>
+        <DeleteSelectedButton onClick={handleDeleteSelectedContacts} count={state.selectedContacts.length} />
       )}
+      <ConfirmationDialog
+        isOpen={isConfirmDialogOpen}
+        message={`Are you sure you want to delete?`}
+        onConfirm={confirmDelete}
+        onCancel={() => {
+          setIsConfirmDialogOpen(false);
+          setContactToDelete(null);
+        }}
+      />
+      <ConfirmationDialog
+        isOpen={isConfirmMultipleDeleteDialogOpen}
+        message={`Do you want to delete ${state.selectedContacts.length} selected contacts?`}
+        onConfirm={confirmDeleteSelectedContacts}
+        onCancel={() => setIsConfirmMultipleDeleteDialogOpen(false)}
+      />
     </div>
   );
 }
