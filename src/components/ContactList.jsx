@@ -23,23 +23,25 @@ function ContactList({ contacts, onEdit, onDelete }) {
               onChange={() => handleToggleSelect(contact.id)}
               className="mr-2"
             />
-            <div className="flex-grow space-y-1">
+            <div className="flex-grow space-y-1 max-sm:*:text-sm">
               <p className='capitalize'><FontAwesomeIcon icon={faUser} /> {`${contact.firstName} ${contact.lastName}`}</p>
               <p><FontAwesomeIcon icon={faEnvelope} /> {contact.email}</p>
               <p><FontAwesomeIcon icon={faPhone} /> {contact.phone}</p>
             </div>
-            <button
-              onClick={() => onEdit(contact)}
-              className="transition-all bg-yellow-500 text-white p-1 rounded mr-2 hover:text-yellow-500 hover:bg-transparent"
-            >
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-            <button
-              onClick={() => onDelete(contact)} 
-              className="transition-all bg-red-500 text-white p-1 rounded hover:text-red-500 hover:bg-transparent"
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
+            <div className='flex max-sm:flex-col max-sm:*:w-5 max-sm:*:text-sm max-sm:gap-2'>
+              <button
+                onClick={() => onEdit(contact)}
+                className="transition-all bg-yellow-500 text-white p-1 rounded mr-2 hover:text-yellow-500 hover:bg-transparent"
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+              <button
+                onClick={() => onDelete(contact)}
+                className="transition-all bg-red-500 text-white p-1 rounded hover:text-red-500 hover:bg-transparent"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </div>
           </li>
         ))}
       </ul>
